@@ -11,4 +11,5 @@ public interface Dao<T, K> {
     public void add(T t) throws Exception;
     
     public void delete(K k) throws Exception;
+    
 }

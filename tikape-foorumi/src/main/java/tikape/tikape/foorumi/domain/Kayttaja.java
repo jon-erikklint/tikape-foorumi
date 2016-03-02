@@ -3,9 +3,9 @@ package tikape.tikape.foorumi.domain;
 public class Kayttaja {
  
     private int id;
-    private int nimi;
+    private String nimi;
 
-    public Kayttaja(int id, int nimi) {
+    public Kayttaja(int id, String nimi) {
         this.id = id;
         this.nimi = nimi;
     }
@@ -18,11 +18,11 @@ public class Kayttaja {
         this.id = id;
     }
 
-    public int getNimi() {
+    public String getNimi() {
         return nimi;
     }
 
-    public void setNimi(int nimi) {
+    public void setNimi(String nimi) {
         this.nimi = nimi;
     }
     
