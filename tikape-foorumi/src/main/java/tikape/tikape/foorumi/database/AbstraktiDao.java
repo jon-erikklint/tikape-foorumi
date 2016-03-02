@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import tikape.tikape.foorumi.domain.Kayttaja;
 
 public abstract class AbstraktiDao<
         T,K> implements Dao<T,K>{
@@ -18,7 +17,9 @@ public abstract class AbstraktiDao<
         this.taulu = taulu;
     }
     
-    public abstract T createT(ResultSet rs);
+    public abstract T createT(ResultSet rs) throws Exception;
+    
+    public abstract List<String> values(T t) throws Exception;
 
     @Override
     public T findOne(K k) throws Exception {
@@ -64,12 +65,32 @@ public abstract class AbstraktiDao<
 
     @Override
     public void add(T t) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection c = db.getConnection();
+        
+        List<String> parametres = values(t);
+        String sarakkeet = "";
+        for(String value : parametres){
+            sarakkeet+=value;
+        }
+        
+        PreparedStatement ps = c.prepareStatement("INSERT INTO "+taulu+" VALUES ("+sarakkeet+")");
+        
+        ps.executeUpdate();
+        
+        ps.close();
+        c.close();
     }
 
     @Override
     public void delete(K k) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection c = db.getConnection();
+        PreparedStatement ps = c.prepareStatement("DELETE FROM "+taulu+" WHERE id=?");
+        ps.setObject(1, k);
+        
+        ps.executeUpdate();
+        
+        ps.close();
+        c.close();
     }
     
     
