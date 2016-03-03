@@ -6,10 +6,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstraktiDao<
-        T,K> implements Dao<T,K>{
+public abstract class AbstraktiDao<T,K> implements Dao<T,K>{
 
-    private Database db;
+    Database db;
     private String taulu;
 
     public AbstraktiDao(Database db, String taulu) {
