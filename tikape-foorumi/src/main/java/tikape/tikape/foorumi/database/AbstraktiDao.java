@@ -69,8 +69,14 @@ public abstract class AbstraktiDao<
         
         List<String> parametres = values(t);
         String sarakkeet = "";
-        for(String value : parametres){
-            sarakkeet+=value;
+        
+        for(int i = 0 ; i < parametres.size() ; i++){
+            
+            sarakkeet+=parametres.get(i);
+            if(i<parametres.size()-1){
+                sarakkeet+=", ";
+            }
+            
         }
         
         PreparedStatement ps = c.prepareStatement("INSERT INTO "+taulu+" VALUES ("+sarakkeet+")");
