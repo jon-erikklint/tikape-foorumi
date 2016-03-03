@@ -5,6 +5,8 @@
  */
 package tikape.tikape.foorumi.domain;
 
+import java.sql.Timestamp;
+
 /**
  *
  * @author tokito
@@ -13,14 +15,15 @@ public class Viesti {
 
     private int id;
     private String sisalto;
+    private Timestamp date;
     private Kayttaja kayttaja;
     private Avaus avaus;
     
 
-    public Viesti(int id, String sisalto) {
+    public Viesti(int id, String sisalto, Timestamp date) {
         this.id = id;
         this.sisalto = sisalto;
-       
+        this.date = date;
     }
 
     public int getId() {
@@ -46,5 +49,23 @@ public class Viesti {
     public void setSisalto(String sisalto) {
         this.sisalto = sisalto;
     }
+
+    public Timestamp getDate() {
+        return date;
+    }
+
+    public void setDate(Timestamp date) {
+        this.date = date;
+    }
+
+    public Kayttaja getKayttaja() {
+        return kayttaja;
+    }
+
+    public Avaus getAvaus() {
+        return avaus;
+    }
+    
+    
 
 }

@@ -1,17 +1,20 @@
 
 package tikape.tikape.foorumi.domain;
 
+import java.sql.Timestamp;
+
 
 public class Avaus {
     
     private int id;
     private String otsikko;
     private Alue alue;
+    private Timestamp uusinviesti;
+    private int viesteja;
 
-    public Avaus(int id, String otsikko, Alue alue) {
+    public Avaus(int id, String otsikko) {
         this.id = id;
         this.otsikko = otsikko;
-        this.alue = alue;
     }
 
     public int getId() {
@@ -36,6 +39,22 @@ public class Avaus {
 
     public void setAlue(Alue alue) {
         this.alue = alue;
+    }
+
+    public Timestamp getUusinviesti() {
+        return uusinviesti;
+    }
+
+    public void setUusinviesti(Timestamp uusinviesti) {
+        this.uusinviesti = uusinviesti;
+    }
+
+    public int getViesteja() {
+        return viesteja;
+    }
+
+    public void setViesteja(int viesteja) {
+        this.viesteja = viesteja;
     }
     
     

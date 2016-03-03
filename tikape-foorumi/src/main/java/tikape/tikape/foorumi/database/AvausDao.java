@@ -1,10 +1,11 @@
 package tikape.tikape.foorumi.database;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import tikape.tikape.foorumi.domain.Avaus;
 
-public class AvausDao extends AbstraktiDao {
+public class AvausDao extends AbstraktiDao<Avaus,Integer> {
 
     public AvausDao(Database db, String taulu) {
         super(db, taulu);
@@ -26,7 +27,7 @@ public class AvausDao extends AbstraktiDao {
         String otsikko = t.getOtsikko();
         String alue = t.getAlue() + "";
         String viesteja = t.getViesteja() + "";
-        String uusinViesti = t.getUusinViesti() + "";
+        String uusinViesti = t.getUusinviesti() + "";
 
         lista.add(id);
         lista.add(otsikko);

@@ -2,6 +2,9 @@ package tikape.tikape.foorumi.database;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -22,7 +25,7 @@ public class ViestiDao extends AbstraktiDao<Viesti, Integer> {
         int id = rs.getInt("id");
         String sisalto = rs.getString("sisalto");
 
-        Viesti v = new Viesti(id, sisalto);
+        Viesti v = new Viesti(id, sisalto, Timestamp.from(Instant.now()));
         return v;
     }
 
@@ -45,3 +48,4 @@ public class ViestiDao extends AbstraktiDao<Viesti, Integer> {
         return lista;
 
     }
+}
