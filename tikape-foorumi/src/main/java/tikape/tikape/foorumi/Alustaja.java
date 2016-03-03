@@ -1,22 +1,28 @@
 package tikape.tikape.foorumi;
 
-import tikape.tikape.foorumi.database.Database;
+import tikape.tikape.foorumi.database.*;
 import spark.Spark.*;
 
 public class Alustaja {
     
-    
+    private AlueDao alueDao;
+    private AvausDao avausDao;
+    private Kayttajadao kayttajaDao;
+    private ViestiDao viestiDao;
     
     public void alustaSql(){
-        String osoite = "jdbc:sqlite:foorumi.db";
+        Database db = luoDatabase();
         
-        Database db = new Database(osoite);
-        
-        alustaDaot(db);
+        alueDao = new AlueDao(db);
+        avausDao = new AvausDao(db);
+        kayttajaDao = new Kayttajadao(db);
+        viestiDao = new ViestiDao(db);
     }
     
-    private void alustaDaot(Database db){
+    private Database luoDatabase(){
+        String osoite = "jdbc:sqlite:foorumi.db";
         
+        return new Database(osoite);
     }
     
     public void alustaKuuntelijat(){

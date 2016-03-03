@@ -9,8 +9,8 @@ import tikape.tikape.foorumi.domain.Alue;
 
 public class AlueDao extends AbstraktiDao<Alue, Integer>{
 
-    public AlueDao(Database db, String taulu) {
-        super(db, taulu);
+    public AlueDao(Database db) {
+        super(db, "Alue");
     }
 
     @Override

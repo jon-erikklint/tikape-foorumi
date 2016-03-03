@@ -7,8 +7,8 @@ import tikape.tikape.foorumi.domain.Avaus;
 
 public class AvausDao extends AbstraktiDao<Avaus,Integer> {
 
-    public AvausDao(Database db, String taulu) {
-        super(db, taulu);
+    public AvausDao(Database db) {
+        super(db, "Avaus");
     }
 
     @Override

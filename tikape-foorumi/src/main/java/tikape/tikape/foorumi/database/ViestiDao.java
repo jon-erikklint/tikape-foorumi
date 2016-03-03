@@ -14,8 +14,6 @@ import tikape.tikape.foorumi.domain.Viesti;
 
 public class ViestiDao extends AbstraktiDao<Viesti, Integer> {
 
-    private Map<String, Class<?>> Kayttaja;
-
     public ViestiDao(Database db) {
         super(db, "Viesti");
     }
