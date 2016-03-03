@@ -1,16 +1,12 @@
 package tikape.tikape.foorumi;
 
-import static spark.Spark.*;
-import tikape.tikape.foorumi.database.Database;
-
 public class Main {
     
     public static void main(String[] args) throws Exception{
-        String osoite = "jdbc:sqlite:foorumi.db";
+        Alustaja ia = new Alustaja();
         
-        Database db = new Database(osoite);
-        
-        
+        ia.alustaSql();
+        ia.alustaKuuntelijat();
     }
     
 }
