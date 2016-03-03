@@ -15,6 +15,7 @@ public class Viesti {
     private String sisalto;
     private Kayttaja kayttaja;
     private Avaus avaus;
+    
 
     public Viesti(int id, String sisalto) {
         this.id = id;
