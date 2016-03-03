@@ -7,6 +7,7 @@ public class Main {
         
         ia.alustaSql();
         ia.alustaKuuntelijat();
+        
     }
     
 }
