@@ -24,27 +24,39 @@ public class AvausDao extends AbstraktiDao<Avaus,Integer> {
         return super.findByCondition(ehdot, arvot);
     }
     
-    public int viestejaAvauksessa(Avaus avaus) throws Exception{
+    public void viestejaAvauksessa(List<Avaus> avaukset) throws Exception{
         Connection c = db.getConnection();
-        PreparedStatement ps = c.prepareStatement("SELECT COUNT(*) viesteja FROM Avaus a, Viesti v WHERE a.id = viesti.avaus AND a.id=?;");
-        ps.setObject(1, avaus.getId());
         
-        ResultSet rs = ps.executeQuery();
-        rs.next();
+        for(Avaus avaus : avaukset){
+            PreparedStatement ps = c.prepareStatement("SELECT COUNT(*) viesteja FROM Avaus a, Viesti v WHERE a.id = v.avaus AND a.id=?;");
+            ps.setObject(1, avaus.getId());
+
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+
+            avaus.setViesteja(rs.getInt("viesteja"));
         
-        return rs.getInt("viesteja");
+            ps.close();
+            rs.close();
+        }
+        
+        c.close();
     }
     
-    public Timestamp uusinViestiAvauksessa(Avaus avaus) throws Exception{
+    public void uusinViestiAvauksessa(List<Avaus> avaukset) throws Exception{
         Connection c = db.getConnection();
-        PreparedStatement ps = c.prepareStatement("SELECT * FROM Avaus a, Viesti v WHERE a.id = viesti.avaus AND a.id=? ORDER BY viesti.date DESC LIMIT 1;");
-        ps.setObject(1, avaus.getId());
         
-        ResultSet rs = ps.executeQuery();
+        for(Avaus avaus: avaukset){
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM Avaus a, Viesti v WHERE a.id = v.avaus AND a.id=? ORDER BY v.aika DESC LIMIT 1;");
         
-        rs.next();
-        
-        return rs.getTimestamp("date");
+            ps.setObject(1, avaus.getId());
+
+            ResultSet rs = ps.executeQuery();
+
+            rs.next();
+
+            avaus.setUusinviesti(rs.getTimestamp("aika"));
+        }
     }
 
     @Override

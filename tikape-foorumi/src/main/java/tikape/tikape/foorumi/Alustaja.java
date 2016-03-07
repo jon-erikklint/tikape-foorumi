@@ -9,7 +9,7 @@ import tikape.tikape.foorumi.database.*;
 import spark.Spark.*;
 import static spark.Spark.get;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
-import tikape.tikape.foorumi.domain.Alue;
+import tikape.tikape.foorumi.domain.*;
 
 public class Alustaja {
 
@@ -41,10 +41,25 @@ public class Alustaja {
 
     private void avaussivu() {
         get("/:alue", (req, res) ->{
-            String alue = req.params(":alue");
+            String a = req.params(":alue");
+            int alue;
+            try{
+                alue = Integer.parseInt(a);
+            }catch(Exception e){
+                return new ModelAndView(null, "avaukset");
+            }
+            
             Map map = new HashMap<>();
             
+            List<Avaus> avaukset = avausDao.avauksetAlueella(alue);
+            avausDao.uusinViestiAvauksessa(avaukset);
+            avausDao.viestejaAvauksessa(avaukset);
             
+            map.put("avaukset", avaukset);
+            
+            Alue al = alueDao.findOne(alue);
+            
+            map.put("aihealue", al.getNimi());
             
             return new ModelAndView(map, "avaukset");}, 
                 new ThymeleafTemplateEngine());
