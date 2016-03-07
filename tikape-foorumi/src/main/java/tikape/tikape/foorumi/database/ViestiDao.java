@@ -1,5 +1,7 @@
 package tikape.tikape.foorumi.database;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -45,5 +47,35 @@ public class ViestiDao extends AbstraktiDao<Viesti, Integer> {
 
         return lista;
 
+    }
+
+    public List<Viesti> viestejaAvauksessa(int avausId) throws Exception {
+        List<String> ehdot = new ArrayList<>();
+        List<Object> arvot = new ArrayList<>();
+
+        ehdot.add("Viesti.avaus=?");
+        arvot.add(avausId);
+
+        return super.findByCondition(ehdot, arvot);
+    }
+
+    public void viestiSisalto(List<Viesti> lista) throws Exception {
+        Connection c = db.getConnection();
+
+        for (Viesti v : lista) {
+            PreparedStatement s = c.prepareStatement("SELECT viesti.sisalto as sisalto, kayttaja.nimi as nimi, kayttaja.id as id FROM Viesti, Kayttaja WHERE viesti.kayttaja = kayttaja.id AND v.id =?");
+            s.setObject(1, v.getId());
+            ResultSet rs = s.executeQuery();
+            
+            rs.next();
+
+            v.setSisalto(rs.getString("sisalto"));
+            v.setKayttaja(new Kayttaja(rs.getInt("id"), rs.getString("nimi")));
+
+            s.close();
+            rs.close();
+
+        }
+        c.close();
     }
 }

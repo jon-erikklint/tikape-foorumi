@@ -35,49 +35,50 @@ public class Alustaja {
         return new Database(osoite);
     }
 
-    public void alustaKuuntelijat() throws Exception{
+    public void alustaKuuntelijat() throws Exception {
         avaussivu();
         aluesivu();
         viestisivu();
     }
 
     private void avaussivu() {
-        get("/:alue", (req, res) ->{
+        get("/:alue", (req, res) -> {
             String a = req.params(":alue");
             int alue;
-            try{
+            try {
                 alue = Integer.parseInt(a);
-            }catch(Exception e){
+            } catch (Exception e) {
                 return new ModelAndView(null, "avaukset");
             }
-            
+
             Map map = new HashMap<>();
-            
+
             List<Avaus> avaukset = avausDao.avauksetAlueella(alue);
             avausDao.uusinViestiAvauksessa(avaukset);
             avausDao.viestejaAvauksessa(avaukset);
-            
+
             map.put("avaukset", avaukset);
-            
+
             Alue al = alueDao.findOne(alue);
-            
+
             map.put("aihealue", al.getNimi());
-            
-            return new ModelAndView(map, "avaukset");}, 
+
+            return new ModelAndView(map, "avaukset");
+        },
                 new ThymeleafTemplateEngine());
     }
 
     private void aluesivu() throws SQLException, ClassNotFoundException {
-        
+
         get("/", (req, res) -> {
             Map map = new HashMap<>();
-        
+
             List<Alue> lista = alueDao.findAll();
             alueDao.viestejaYhteensa(lista);
             alueDao.uusimmatViestit(lista);
-            
+
             System.out.println(lista.get(0).getNimi());
-            
+
             map.put("alueet", lista);
 
             return new ModelAndView(map, "alueet");
@@ -86,7 +87,35 @@ public class Alustaja {
     }
 
     private void viestisivu() {
-        
+        get("/:avaus/:viesti", (req, res) -> {
+            String a = req.params(":avaus");
+            String b = req.params(":viesti");
+
+            int avaus;
+            int viesti;
+
+            try {
+            avaus = Integer.parseInt(a);
+            viesti = Integer.parseInt(b);
+            } catch (Exception e) {
+                return new ModelAndView(null, "avaus");
+            }
+            
+            Map map = new HashMap();
+
+            List<Viesti> lista = viestiDao.viestejaAvauksessa(viesti);
+            viestiDao.viestiSisalto(lista);
+
+            map.put("viestit", lista);
+
+            Avaus av = avausDao.findOne(viesti);
+
+            map.put("otsikko", av.getOtsikko());
+
+            return new ModelAndView(map, "avaus");
+
+        },
+                new ThymeleafTemplateEngine());
 
     }
 
