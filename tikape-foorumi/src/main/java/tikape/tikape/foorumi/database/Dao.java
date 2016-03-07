@@ -10,6 +10,8 @@ public interface Dao<T, K> {
     
     public List<T> findByCondition(List<String> cond, List<Object> val) throws Exception;
     
+    public int getHighestId() throws Exception;
+    
     public void add(T t) throws Exception;
     
     public void delete(K k) throws Exception;

@@ -41,19 +41,21 @@ public class AlueDao extends AbstraktiDao<Alue, Integer> {
     public void uusimmatViestit(List<Alue> a) throws Exception {
         Connection c = db.getConnection();
         
+        PreparedStatement ps;
+        ResultSet rs;
+        
         for(Alue al : a){
             
-            PreparedStatement ps = c.prepareStatement("SELECT * FROM Avaus a, Viesti v WHERE a.id = v.avaus AND a.alue=? ORDER BY v.aika DESC");
+            ps = c.prepareStatement("SELECT * FROM Avaus a, Viesti v WHERE a.id = v.avaus AND a.alue=? ORDER BY v.aika DESC");
             ps.setObject(1, al.getId());
             
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             
             rs.next();
             
             al.setUusinviesti(rs.getTimestamp("aika"));
             
-            ps.close();
-            rs.close();
+            
         }
         
         c.close();

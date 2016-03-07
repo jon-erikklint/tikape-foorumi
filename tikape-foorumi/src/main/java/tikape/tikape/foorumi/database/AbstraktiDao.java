@@ -86,8 +86,31 @@ public abstract class AbstraktiDao<T,K> implements Dao<T,K>{
             list.add(createT(rs));
         }
         
+        rs.close();
+        ps.close();
+        c.close();
+        
         return list;
         
+    }
+    
+    @Override
+    public int getHighestId() throws Exception {
+        Connection c = db.getConnection();
+        
+        PreparedStatement ps = c.prepareStatement("SELECT * FROM "+taulu+" ORDER BY id DESC");
+        
+        ResultSet rs = ps.executeQuery();
+        
+        rs.next();
+        
+        int korkein = rs.getInt("id");
+        
+        rs.close();
+        ps.close();
+        c.close();
+        
+        return korkein;
     }
 
     @Override
@@ -95,18 +118,18 @@ public abstract class AbstraktiDao<T,K> implements Dao<T,K>{
         Connection c = db.getConnection();
         
         List<String> parametres = values(t);
-        String sarakkeet = "";
         
-        for(int i = 0 ; i < parametres.size() ; i++){
-            
-            sarakkeet+=parametres.get(i);
-            if(i<parametres.size()-1){
-                sarakkeet+=", ";
-            }
-            
+        String apu = "?";
+        
+        for(int i = 1 ; i < parametres.size() ; i++){
+            apu += ", ?";
         }
         
-        PreparedStatement ps = c.prepareStatement("INSERT INTO "+taulu+" VALUES ("+sarakkeet+")");
+        PreparedStatement ps = c.prepareStatement("INSERT INTO "+taulu+" VALUES ("+apu+")");
+        
+        for(int i = 0 ; i < parametres.size(); i++){
+            ps.setObject(i+1, parametres.get(i));
+        }
         
         ps.executeUpdate();
         

@@ -10,6 +10,7 @@ import spark.ModelAndView;
 import tikape.tikape.foorumi.database.*;
 import spark.Spark.*;
 import static spark.Spark.get;
+import static spark.Spark.post;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import tikape.tikape.foorumi.domain.*;
 
@@ -84,6 +85,20 @@ public class Alustaja {
             return new ModelAndView(map, "alueet");
         },
                 new ThymeleafTemplateEngine());
+        
+        post("/", (req, res) ->{
+            
+            String uudenAlueenNimi = req.queryParams("nimi");
+            int id = alueDao.getHighestId()+1;
+            
+            Alue uusiAlue = new Alue(id, uudenAlueenNimi);
+            
+            alueDao.add(uusiAlue);
+            
+            res.redirect("/"+id);
+            
+            return null;
+        });
     }
 
     private void viestisivu() {
