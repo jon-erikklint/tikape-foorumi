@@ -23,6 +23,15 @@
                 <td th:text="${avaus.uusinviesti}">0</td>
             </tr>
         </table>
+        
+        <br/>
+        
+        <form method="POST" action="/">
+            Avauksen otsikko: <input type="text" name="otsikko"/><br/>
+            Viesti: <input type="text" name="viestinSisalto"/><br/>
+            Nimimerkki: <input type="text" name="kayttaja"/><br/>
+            <input type="submit"/>
+        </form>
 
     </body>
 </html>
