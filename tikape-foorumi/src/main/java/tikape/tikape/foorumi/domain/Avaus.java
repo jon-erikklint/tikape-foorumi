@@ -8,13 +8,15 @@ public class Avaus {
     
     private int id;
     private String otsikko;
+    private int alueId;
     private Alue alue;
     private Timestamp uusinviesti;
     private int viesteja;
 
-    public Avaus(int id, String otsikko) {
+    public Avaus(int id, String otsikko, int alueId) {
         this.id = id;
         this.otsikko = otsikko;
+        this.alueId = alueId;
     }
 
     public int getId() {
@@ -55,6 +57,14 @@ public class Avaus {
 
     public void setViesteja(int viesteja) {
         this.viesteja = viesteja;
+    }
+
+    public int getAlueId() {
+        return alueId;
+    }
+
+    public void setAlueId(int alueId) {
+        this.alueId = alueId;
     }
     
     

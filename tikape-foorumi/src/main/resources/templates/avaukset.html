@@ -14,7 +14,11 @@
                 <td>Viimeisin viesti:</td>
             </tr>
             <tr th:each="avaus : ${avaukset}">
-                <td th:text="${avaus.otsikko}">Esimerkki</td>
+                <td>
+                    <a th:href="@{http://localhost:4567/__${avaus.alueId}__/__${avaus.id}__}">
+                        <span th:text="${avaus.otsikko}"></span>
+                    </a>
+                </td>
                 <td th:text="${avaus.viesteja}">0</td>
                 <td th:text="${avaus.uusinviesti}">0</td>
             </tr>

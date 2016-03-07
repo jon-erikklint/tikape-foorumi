@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.*;
+import org.thymeleaf.context.IWebContext;
+import org.thymeleaf.context.WebContext;
 import spark.ModelAndView;
 import tikape.tikape.foorumi.database.*;
 import spark.Spark.*;

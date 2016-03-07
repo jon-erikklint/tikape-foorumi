@@ -63,7 +63,11 @@ public class AvausDao extends AbstraktiDao<Avaus,Integer> {
     public Avaus createT(ResultSet rs) throws Exception {
         int id = rs.getInt("id");
         String otsikko = rs.getString("otsikko");
-        Avaus a = new Avaus(id, otsikko);
+        int avausId = rs.getInt("alue");
+        
+        System.out.println(id);
+        
+        Avaus a = new Avaus(id, otsikko, avausId);
         return a;
     }
 
