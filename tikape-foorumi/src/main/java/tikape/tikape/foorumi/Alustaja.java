@@ -49,6 +49,10 @@ public class Alustaja {
             Map map = new HashMap<>();
         
             List<Alue> lista = alueDao.findAll();
+            alueDao.viestejaYhteensa(lista);
+            alueDao.uusimmatViestit(lista);
+            
+            System.out.println(lista.get(0).getNimi());
             
             map.put("alueet", lista);
 
