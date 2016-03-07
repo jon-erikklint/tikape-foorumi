@@ -33,7 +33,7 @@ public class Alustaja {
         return new Database(osoite);
     }
 
-    public void alustaKuuntelijat() {
+    public void alustaKuuntelijat() throws Exception{
         aihesivu();
         aluesivu();
         viestisivu();
@@ -50,7 +50,7 @@ public class Alustaja {
         
             List<Alue> lista = alueDao.findAll();
             
-            map.put("Alueet", lista);
+            map.put("alueet", lista);
 
             return new ModelAndView(map, "alueet");
         },
