@@ -14,6 +14,16 @@ public class AvausDao extends AbstraktiDao<Avaus,Integer> {
         super(db, "Avaus");
     }
     
+    public List<Avaus> avauksetAlueella(int alueId)throws Exception{
+        List<String> ehdot = new ArrayList<>();
+        List<Object> arvot = new ArrayList<>();
+        
+        ehdot.add("Avaus.alue=?");
+        arvot.add(alueId);
+        
+        return super.findByCondition(ehdot, arvot);
+    }
+    
     public int viestejaAvauksessa(Avaus avaus) throws Exception{
         Connection c = db.getConnection();
         PreparedStatement ps = c.prepareStatement("SELECT COUNT(*) viesteja FROM Avaus a, Viesti v WHERE a.id = viesti.avaus AND a.id=?;");

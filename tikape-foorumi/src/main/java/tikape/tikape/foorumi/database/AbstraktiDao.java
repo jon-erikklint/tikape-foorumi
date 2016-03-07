@@ -61,6 +61,34 @@ public abstract class AbstraktiDao<T,K> implements Dao<T,K>{
         
         return ts;
     }
+    
+    @Override
+    public List<T> findByCondition(List<String> conds, List<Object> values) throws Exception{
+        Connection c = db.getConnection();
+        
+        String query = "SELECT * FROM "+taulu+" WHERE ";
+        for(int i = 0 ; i < conds.size() ; i++){
+            query += conds.get(i);
+            if(i < conds.size()-1){
+                query+=" AND ";
+            }
+        }
+        
+        PreparedStatement ps = c.prepareStatement(query);
+        for(int i = 0 ; i < values.size() ; i++){
+            ps.setObject(i+1, values.get(i));
+        }
+        
+        ResultSet rs = ps.executeQuery();
+        
+        List<T> list = new ArrayList<T>();
+        while(rs.next()){
+            list.add(createT(rs));
+        }
+        
+        return list;
+        
+    }
 
     @Override
     public void add(T t) throws Exception {

@@ -34,13 +34,20 @@ public class Alustaja {
     }
 
     public void alustaKuuntelijat() throws Exception{
-        aihesivu();
+        avaussivu();
         aluesivu();
         viestisivu();
     }
 
-    private void aihesivu() {
-
+    private void avaussivu() {
+        get("/:alue", (req, res) ->{
+            String alue = req.params(":alue");
+            Map map = new HashMap<>();
+            
+            
+            
+            return new ModelAndView(map, "avaukset");}, 
+                new ThymeleafTemplateEngine());
     }
 
     private void aluesivu() throws SQLException, ClassNotFoundException {
