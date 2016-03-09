@@ -13,6 +13,12 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import tikape.tikape.foorumi.domain.*;
+import static spark.Spark.get;
+import static spark.Spark.post;
+import static spark.Spark.get;
+import static spark.Spark.post;
+import static spark.Spark.get;
+import static spark.Spark.post;
 
 public class Alustaja {
 
@@ -86,12 +92,8 @@ public class Alustaja {
             Avaus avaus = new Avaus(avausId, avauksenOtsikko, alue);
             Viesti alkuviesti = new Viesti(viestiId, viestinSisalto, Timestamp.from(Instant.now()), kayttaja, avausId);
             
-            System.out.println("£££££££££££££££££££££££££££££££££££££££££££££££");
-            
             avausDao.add(avaus);
             viestiDao.add(alkuviesti);
-            
-            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
             
             res.redirect("/"+alue+"/"+avausId);
             
@@ -130,28 +132,24 @@ public class Alustaja {
     }
 
     private void viestisivu() {
-        get("/:avaus/:viesti", (req, res) -> {
-            String a = req.params(":avaus");
-            String b = req.params(":viesti");
-
-            int avaus;
-            int viesti;
+        get("/:alue/:avaus", (req, res) -> {
+            String avaus = req.params(":avaus");
+            int avausId;
 
             try {
-            avaus = Integer.parseInt(a);
-            viesti = Integer.parseInt(b);
+            avausId = Integer.parseInt(avaus);
             } catch (Exception e) {
                 return new ModelAndView(null, "avaus");
             }
             
             Map map = new HashMap();
 
-            List<Viesti> lista = viestiDao.viestejaAvauksessa(viesti);
+            List<Viesti> lista = viestiDao.viestejaAvauksessa(avausId);
             viestiDao.viestiSisalto(lista);
 
             map.put("viestit", lista);
 
-            Avaus av = avausDao.findOne(viesti);
+            Avaus av = avausDao.findOne(avausId);
 
             map.put("otsikko", av.getOtsikko());
 
@@ -159,6 +157,31 @@ public class Alustaja {
 
         },
                 new ThymeleafTemplateEngine());
+        
+        post("/:alue/:avaus", (req, res)->{
+            String avaus = req.params(":avaus");
+            String alue = req.params(":alue");
+            int avausId;
+
+            try {
+            avausId = Integer.parseInt(avaus);
+            } catch (Exception e) {
+                return new ModelAndView(null, "avaus");
+            }
+            
+            int id = viestiDao.getHighestId()+1;
+            String sisalto = req.queryParams("sisalto");
+            String kayttaja = req.queryParams("kayttaja");
+            Timestamp aika = Timestamp.from(Instant.now());
+     
+            Viesti viesti = new Viesti(id, sisalto, aika, kayttaja, avausId);
+            
+            viestiDao.add(viesti);
+            
+            res.redirect("/"+alue+"/"+avaus);
+            
+            return null;
+        });
 
     }
 
