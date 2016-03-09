@@ -102,9 +102,13 @@ public abstract class AbstraktiDao<T,K> implements Dao<T,K>{
         
         ResultSet rs = ps.executeQuery();
         
-        rs.next();
+        int korkein;
         
-        int korkein = rs.getInt("id");
+        if(rs.next()){
+            korkein = rs.getInt("id");
+        }else{
+            korkein=0;
+        }
         
         rs.close();
         ps.close();

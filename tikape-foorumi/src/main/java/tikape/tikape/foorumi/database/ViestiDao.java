@@ -18,9 +18,12 @@ public class ViestiDao extends AbstraktiDao<Viesti, Integer> {
     public Viesti createT(ResultSet rs) throws Exception {
         int id = rs.getInt("id");
         String sisalto = rs.getString("sisalto");
+        Timestamp aika = rs.getTimestamp("aika");
         String kayttaja = rs.getString("kayttaja");
+        int avausId = rs.getInt("avaus");
+        
 
-        Viesti v = new Viesti(id, sisalto, Timestamp.from(Instant.now()), kayttaja);
+        Viesti v = new Viesti(id, sisalto, aika, kayttaja, avausId);
         return v;
     }
 
@@ -32,11 +35,13 @@ public class ViestiDao extends AbstraktiDao<Viesti, Integer> {
         String sisalto = t.getSisalto();
         String aika = t.getDate() + "";
         String kayttaja = t.getKayttaja();
+        String avausId = t.getAvausId()+"";
 
         lista.add(id);
         lista.add(sisalto);
         lista.add(aika);
         lista.add(kayttaja);
+        lista.add(avausId);
 
         return lista;
 

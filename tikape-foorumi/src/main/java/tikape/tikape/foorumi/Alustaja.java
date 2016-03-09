@@ -78,18 +78,22 @@ public class Alustaja {
             }
             
             String avauksenOtsikko = req.queryParams("otsikko");
-            String viestinSisalto = req.queryParams("sisalto");
+            String viestinSisalto = req.queryParams("viestinSisalto");
             String kayttaja = req.queryParams("kayttaja");
             int avausId = avausDao.getHighestId()+1;
             int viestiId = viestiDao.getHighestId()+1;
             
             Avaus avaus = new Avaus(avausId, avauksenOtsikko, alue);
-            Viesti alkuviesti = new Viesti(viestiId, viestinSisalto, Timestamp.from(Instant.now()), kayttaja);
+            Viesti alkuviesti = new Viesti(viestiId, viestinSisalto, Timestamp.from(Instant.now()), kayttaja, avausId);
+            
+            System.out.println("£££££££££££££££££££££££££££££££££££££££££££££££");
             
             avausDao.add(avaus);
             viestiDao.add(alkuviesti);
             
-            res.redirect("/"+alue+"/"+avaus);
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+            
+            res.redirect("/"+alue+"/"+avausId);
             
             return null;});
     }
@@ -103,8 +107,6 @@ public class Alustaja {
             List<Alue> lista = alueDao.findAll();
             alueDao.viestejaYhteensa(lista);
             alueDao.uusimmatViestit(lista);
-
-            System.out.println(lista.get(0).getNimi());
 
             map.put("alueet", lista);
 

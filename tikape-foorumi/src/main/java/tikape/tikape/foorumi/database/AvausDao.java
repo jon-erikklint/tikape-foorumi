@@ -53,10 +53,10 @@ public class AvausDao extends AbstraktiDao<Avaus,Integer> {
 
             ResultSet rs = ps.executeQuery();
 
-            rs.next();
+            if(rs.next()){
+                avaus.setUusinviesti(rs.getTimestamp("aika"));
+            }
 
-            avaus.setUusinviesti(rs.getTimestamp("aika"));
-            
             rs.close();
             ps.close();
         }
