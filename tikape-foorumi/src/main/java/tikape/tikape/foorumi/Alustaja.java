@@ -1,11 +1,11 @@
 package tikape.tikape.foorumi;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.*;
-import org.thymeleaf.context.IWebContext;
-import org.thymeleaf.context.WebContext;
 import spark.ModelAndView;
 import tikape.tikape.foorumi.database.*;
 import spark.Spark.*;
@@ -67,7 +67,34 @@ public class Alustaja {
             return new ModelAndView(map, "avaukset");
         },
                 new ThymeleafTemplateEngine());
+        
+        post("/:alue", (req, res) -> {
+            String a = req.params(":alue");
+            int alue;
+            try {
+                alue = Integer.parseInt(a);
+            } catch (Exception e) {
+                res.redirect("/"+a);
+                return null;
+            }
+            
+            String avauksenOtsikko = req.queryParams("otsikko");
+            String viestinSisalto = req.queryParams("sisalto");
+            String kayttaja = req.queryParams("kayttaja");
+            int avausId = avausDao.getHighestId()+1;
+            int viestiId = viestiDao.getHighestId()+1;
+            
+            Avaus avaus = new Avaus(avausId, avauksenOtsikko, alue);
+            Viesti alkuviesti = new Viesti(viestiId, viestinSisalto, Timestamp.from(Instant.now()));
+            
+            avausDao.add(avaus);
+            viestiDao.add(alkuviesti);
+            
+            res.redirect("/"+alue+"/"+avaus);
+            
+            return null;});
     }
+    
 
     private void aluesivu() throws SQLException, ClassNotFoundException {
 
