@@ -63,7 +63,7 @@ public class ViestiDao extends AbstraktiDao<Viesti, Integer> {
         Connection c = db.getConnection();
 
         for (Viesti v : lista) {
-            PreparedStatement s = c.prepareStatement("SELECT viesti.sisalto as sisalto, kayttaja.nimi as nimi, kayttaja.id as id FROM Viesti, Kayttaja WHERE viesti.kayttaja = kayttaja.id AND v.id =?");
+            PreparedStatement s = c.prepareStatement("SELECT v.sisalto as sisalto, kayttaja.nimi as nimi, kayttaja.id as id FROM Viesti v, Kayttaja WHERE v.kayttaja = kayttaja.id AND v.id =?");
             s.setObject(1, v.getId());
             ResultSet rs = s.executeQuery();
             
