@@ -16,21 +16,22 @@ public class Viesti {
     private int id;
     private String sisalto;
     private Timestamp date;
-    private Kayttaja kayttaja;
+    private String kayttaja;
     private Avaus avaus;
     
 
-    public Viesti(int id, String sisalto, Timestamp date) {
+    public Viesti(int id, String sisalto, Timestamp date, String kayttaja) {
         this.id = id;
         this.sisalto = sisalto;
         this.date = date;
+        this.kayttaja = kayttaja;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setKayttaja(Kayttaja kayttaja) {
+    public void setKayttaja(String kayttaja) {
         this.kayttaja = kayttaja;
     }
 
@@ -58,7 +59,7 @@ public class Viesti {
         this.date = date;
     }
 
-    public Kayttaja getKayttaja() {
+    public String getKayttaja() {
         return kayttaja;
     }
 
