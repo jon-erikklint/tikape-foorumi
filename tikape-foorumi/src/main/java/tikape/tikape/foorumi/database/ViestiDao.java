@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import tikape.tikape.foorumi.domain.Kayttaja;
 import tikape.tikape.foorumi.domain.Viesti;
 
 public class ViestiDao extends AbstraktiDao<Viesti, Integer> {
@@ -24,8 +23,9 @@ public class ViestiDao extends AbstraktiDao<Viesti, Integer> {
     public Viesti createT(ResultSet rs) throws Exception {
         int id = rs.getInt("id");
         String sisalto = rs.getString("sisalto");
+        String kayttaja = rs.getString("kayttaja");
 
-        Viesti v = new Viesti(id, sisalto, Timestamp.from(Instant.now()));
+        Viesti v = new Viesti(id, sisalto, Timestamp.from(Instant.now()), kayttaja);
         return v;
     }
 
@@ -63,14 +63,14 @@ public class ViestiDao extends AbstraktiDao<Viesti, Integer> {
         Connection c = db.getConnection();
 
         for (Viesti v : lista) {
-            PreparedStatement s = c.prepareStatement("SELECT v.sisalto as sisalto, kayttaja.nimi as nimi, kayttaja.id as id FROM Viesti v, Kayttaja WHERE v.kayttaja = kayttaja.id AND v.id =?");
+            PreparedStatement s = c.prepareStatement("SELECT v.sisalto as sisalto, v.kayttaja as nimi FROM Viesti v WHERE v.id =?");
             s.setObject(1, v.getId());
             ResultSet rs = s.executeQuery();
             
             rs.next();
 
             v.setSisalto(rs.getString("sisalto"));
-            v.setKayttaja(new Kayttaja(rs.getInt("id"), rs.getString("nimi")));
+            v.setKayttaja(rs.getString("nimi"));
 
             s.close();
             rs.close();
