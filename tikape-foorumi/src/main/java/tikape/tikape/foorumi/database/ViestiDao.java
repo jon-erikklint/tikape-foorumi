@@ -3,14 +3,9 @@ package tikape.tikape.foorumi.database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.*;
 import tikape.tikape.foorumi.domain.Viesti;
 
 public class ViestiDao extends AbstraktiDao<Viesti, Integer> {
@@ -36,13 +31,11 @@ public class ViestiDao extends AbstraktiDao<Viesti, Integer> {
         String id = "" + t.getId();
         String sisalto = t.getSisalto();
         String aika = t.getDate() + "";
-        String avaus = t.getAvaus() + "";
-        String kayttaja = t.getKayttaja() + "";
+        String kayttaja = t.getKayttaja();
 
         lista.add(id);
         lista.add(sisalto);
         lista.add(aika);
-        lista.add(avaus);
         lista.add(kayttaja);
 
         return lista;
