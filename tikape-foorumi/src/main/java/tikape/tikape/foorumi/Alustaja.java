@@ -18,7 +18,6 @@ public class Alustaja {
 
     private AlueDao alueDao;
     private AvausDao avausDao;
-    private Kayttajadao kayttajaDao;
     private ViestiDao viestiDao;
 
     public void alustaSql() {
@@ -26,7 +25,6 @@ public class Alustaja {
 
         alueDao = new AlueDao(db);
         avausDao = new AvausDao(db);
-        kayttajaDao = new Kayttajadao(db);
         viestiDao = new ViestiDao(db);
     }
 
@@ -86,7 +84,7 @@ public class Alustaja {
             int viestiId = viestiDao.getHighestId()+1;
             
             Avaus avaus = new Avaus(avausId, avauksenOtsikko, alue);
-            Viesti alkuviesti = new Viesti(viestiId, viestinSisalto, Timestamp.from(Instant.now()));
+            Viesti alkuviesti = new Viesti(viestiId, viestinSisalto, Timestamp.from(Instant.now()), kayttaja);
             
             avausDao.add(avaus);
             viestiDao.add(alkuviesti);
