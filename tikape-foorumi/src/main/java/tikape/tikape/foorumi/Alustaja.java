@@ -63,6 +63,7 @@ public class Alustaja {
             Alue al = alueDao.findOne(alue);
 
             map.put("aihealue", al.getNimi());
+            map.put("aiheid", alue);
 
             return new ModelAndView(map, "avaukset");
         },

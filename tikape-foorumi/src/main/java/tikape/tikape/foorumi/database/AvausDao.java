@@ -56,7 +56,12 @@ public class AvausDao extends AbstraktiDao<Avaus,Integer> {
             rs.next();
 
             avaus.setUusinviesti(rs.getTimestamp("aika"));
+            
+            rs.close();
+            ps.close();
         }
+        
+        c.close();
     }
 
     @Override
@@ -64,8 +69,6 @@ public class AvausDao extends AbstraktiDao<Avaus,Integer> {
         int id = rs.getInt("id");
         String otsikko = rs.getString("otsikko");
         int avausId = rs.getInt("alue");
-        
-        System.out.println(id);
         
         Avaus a = new Avaus(id, otsikko, avausId);
         return a;
@@ -77,15 +80,11 @@ public class AvausDao extends AbstraktiDao<Avaus,Integer> {
 
         String id = "" + t.getId();
         String otsikko = t.getOtsikko();
-        String alue = t.getAlue() + "";
-        String viesteja = t.getViesteja() + "";
-        String uusinViesti = t.getUusinviesti() + "";
+        String alue = t.getAlueId() + "";
 
         lista.add(id);
         lista.add(otsikko);
         lista.add(alue);
-        lista.add(viesteja);
-        lista.add(uusinViesti);
 
         return lista;
     }
