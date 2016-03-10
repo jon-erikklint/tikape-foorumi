@@ -52,7 +52,7 @@
 
         <ul class="pagination">
             <li th:each="sivunumero :${sivunumerot}">
-                <a th:href="?=${sivunumero}"><span th:text="${sivunumero}"></span></a>
+                <a th:href="${sivunumero}"><span th:text="${sivunumero}"></span></a>
             </li>
         </ul>
 

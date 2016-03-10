@@ -176,7 +176,7 @@ public class Alustaja {
             map.put("alue", al.getNimi());
             map.put("alueid", al.getId());
             
-            List<Integer> sivunumerot = new ArrayList<>();
+            List<String> sivunumerot = new ArrayList<>();
             
             int sivuja = lista.size()/10;
             if(lista.size()%10 != 0){
@@ -184,7 +184,8 @@ public class Alustaja {
             }
             
             for(int i = 0 ; i < sivuja; i++){
-                sivunumerot.add(i+1);
+                int j = i +1;
+                sivunumerot.add("?sivu="+j);
             }
             
             map.put("sivunumerot", sivunumerot);
