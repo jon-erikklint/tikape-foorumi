@@ -18,11 +18,11 @@ public class AlueDao extends AbstraktiDao<Alue, Integer> {
         
         for(Alue al : a){
             int tulos = 0;
-            String id = al.getId() + "";
+            int id = al.getId();
             
             PreparedStatement ps = c.prepareStatement("SELECT COUNT(*) AS id FROM Viesti v, Avaus a WHERE v.avaus = a.id AND a.alue = ?");
 
-            ps.setString(1, id);
+            ps.setInt(1, id);
 
             ResultSet rs = ps.executeQuery();
 
