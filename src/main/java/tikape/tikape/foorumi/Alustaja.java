@@ -17,7 +17,11 @@ public class Alustaja {
     private AlueDao alueDao;
     private AvausDao avausDao;
     private ViestiDao viestiDao;
-
+    
+    public Alustaja(){
+        System.out.println("moimoi");
+    }
+    
     public void alustaHeroku(){
         if (System.getenv("PORT") != null) {
             port(Integer.valueOf(System.getenv("PORT")));
