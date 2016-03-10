@@ -7,6 +7,7 @@ public class Main {
         
         try{
         Alustaja ia = new Alustaja();
+        ia.alustaHeroku();
         ia.alustaSql();
         ia.alustaKuuntelijat();
         }catch(Exception e){
