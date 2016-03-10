@@ -3,10 +3,11 @@ package tikape.tikape.foorumi.database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstraktiDao<T,K> implements Dao<T,K>{
+public abstract class AbstraktiDao<T> implements Dao<T>{
 
     Database db;
     private String taulu;
@@ -18,13 +19,15 @@ public abstract class AbstraktiDao<T,K> implements Dao<T,K>{
     
     public abstract T createT(ResultSet rs) throws Exception;
     
-    public abstract List<String> values(T t) throws Exception;
+    public abstract List<Object> values(T t) throws Exception;
 
     @Override
-    public T findOne(K k) throws Exception {
+    public T findOne(int k) throws Exception {
         Connection connection = db.getConnection();
         PreparedStatement ps = connection.prepareStatement("SELECT * FROM "+taulu+" WHERE id=?");
-        ps.setObject(1, k);
+        ps.setInt(1, k);
+        
+        
         
         ResultSet rs = ps.executeQuery();
         
@@ -79,7 +82,14 @@ public abstract class AbstraktiDao<T,K> implements Dao<T,K>{
         
         PreparedStatement ps = c.prepareStatement(query);
         for(int i = 0 ; i < values.size() ; i++){
-            ps.setObject(i+1, values.get(i));
+           
+            
+            
+            if(values.get(i).getClass().equals(Integer.class)){
+                ps.setInt(i+1, (int) values.get(i));
+            } else if (values.get(i).getClass().equals(String.class)){
+                ps.setString(i+1 , values.get(i).toString());
+            }
         }
         
         ResultSet rs = ps.executeQuery();
@@ -124,7 +134,7 @@ public abstract class AbstraktiDao<T,K> implements Dao<T,K>{
     public void add(T t) throws Exception {
         Connection c = db.getConnection();
         
-        List<String> parametres = values(t);
+        List<Object> parametres = values(t);
         
         String apu = "?";
         
@@ -135,7 +145,16 @@ public abstract class AbstraktiDao<T,K> implements Dao<T,K>{
         PreparedStatement ps = c.prepareStatement("INSERT INTO "+taulu+" VALUES ("+apu+")");
         
         for(int i = 0 ; i < parametres.size(); i++){
-            ps.setObject(i+1, parametres.get(i));
+            
+            Object o = parametres.get(i);
+            
+            if(o.getClass().equals(Integer.class)){
+                ps.setInt(i+1, (int) o);
+            } else if (o.getClass().equals(String.class)){
+                ps.setString(i+1, (String) o);
+            }else if(o.getClass().equals(Timestamp.class)){
+                ps.setTimestamp(i+1, (Timestamp) o);
+            }
         }
         
         ps.executeUpdate();
@@ -145,7 +164,7 @@ public abstract class AbstraktiDao<T,K> implements Dao<T,K>{
     }
 
     @Override
-    public void delete(K k) throws Exception {
+    public void delete(int k) throws Exception {
         Connection c = db.getConnection();
         PreparedStatement ps = c.prepareStatement("DELETE FROM "+taulu+" WHERE id=?");
         ps.setObject(1, k);

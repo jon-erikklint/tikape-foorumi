@@ -36,6 +36,7 @@ public class Database {
             ResultSet rs = psa.executeQuery();
             rs.next();
             if(rs.getInt("a")>0){
+                c.close();
                return; 
             }
             
