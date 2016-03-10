@@ -16,37 +16,25 @@ public class Alustaja {
     private AvausDao avausDao;
     private ViestiDao viestiDao;
     
-    public Alustaja(){
-        System.out.println("moimoi");
-    }
-    
     public void alustaHeroku(){
         if (System.getenv("PORT") != null) {
             port(Integer.valueOf(System.getenv("PORT")));
         }
-
-        String jdbcOsoite = "jdbc:sqlite:foorumi.db";
-        if (System.getenv("DATABASE_URL") != null) {
-            jdbcOsoite = System.getenv("DATABASE_URL");
-        }
-        
-        System.out.println("2");
     }
     
-    public void alustaSql() {
+    public void alustaSql() throws Exception{
         Database db = luoDatabase();
 
-        System.out.println("3");
-        
         alueDao = new AlueDao(db);
         avausDao = new AvausDao(db);
         viestiDao = new ViestiDao(db);
-        
-        System.out.println("4");
     }
 
-    private Database luoDatabase() {
+    private Database luoDatabase() throws Exception{
         String osoite = "jdbc:sqlite:foorumi.db";
+        if (System.getenv("DATABASE_URL") != null) {
+            osoite = System.getenv("DATABASE_URL");
+        }
 
         return new Database(osoite);
     }
