@@ -27,14 +27,20 @@ public class Alustaja {
         if (System.getenv("DATABASE_URL") != null) {
             jdbcOsoite = System.getenv("DATABASE_URL");
         }
+        
+        System.out.println("2");
     }
     
     public void alustaSql() {
         Database db = luoDatabase();
 
+        System.out.println("3");
+        
         alueDao = new AlueDao(db);
         avausDao = new AvausDao(db);
         viestiDao = new ViestiDao(db);
+        
+        System.out.println("4");
     }
 
     private Database luoDatabase() {
