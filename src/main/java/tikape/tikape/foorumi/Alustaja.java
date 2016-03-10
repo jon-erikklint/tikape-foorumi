@@ -3,8 +3,6 @@ package tikape.tikape.foorumi;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.List;
 import java.util.*;
 import spark.ModelAndView;
 import tikape.tikape.foorumi.database.*;
