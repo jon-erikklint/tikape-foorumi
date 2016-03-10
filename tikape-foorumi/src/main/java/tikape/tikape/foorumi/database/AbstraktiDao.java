@@ -63,7 +63,7 @@ public abstract class AbstraktiDao<T,K> implements Dao<T,K>{
     }
     
     @Override
-    public List<T> findByCondition(List<String> conds, List<Object> values) throws Exception{
+    public List<T> findByCondition(List<String> conds, List<Object> values, int limit, int offset, String orderBy, boolean desc) throws Exception{
         Connection c = db.getConnection();
         
         String query = "SELECT * FROM "+taulu+" WHERE ";
@@ -74,6 +74,9 @@ public abstract class AbstraktiDao<T,K> implements Dao<T,K>{
             }
         }
         
+        query += " ORDER BY "+orderBy;
+        query += " LIMIT "+limit+" OFFSET "+offset;
+        
         PreparedStatement ps = c.prepareStatement(query);
         for(int i = 0 ; i < values.size() ; i++){
             ps.setObject(i+1, values.get(i));
@@ -81,7 +84,7 @@ public abstract class AbstraktiDao<T,K> implements Dao<T,K>{
         
         ResultSet rs = ps.executeQuery();
         
-        List<T> list = new ArrayList<T>();
+        List<T> list = new ArrayList<>();
         while(rs.next()){
             list.add(createT(rs));
         }

@@ -8,7 +8,7 @@ public interface Dao<T, K> {
     
     public List<T> findAll() throws Exception;
     
-    public List<T> findByCondition(List<String> cond, List<Object> val) throws Exception;
+    public List<T> findByCondition(List<String> cond, List<Object> val, int limit, int offset, String orderBy, boolean desc) throws Exception;
     
     public int getHighestId() throws Exception;
     

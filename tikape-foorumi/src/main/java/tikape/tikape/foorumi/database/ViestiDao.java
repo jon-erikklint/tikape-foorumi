@@ -47,14 +47,16 @@ public class ViestiDao extends AbstraktiDao<Viesti, Integer> {
 
     }
 
-    public List<Viesti> viestejaAvauksessa(int avausId) throws Exception {
+    public List<Viesti> viestejaAvauksessa(int avausId, int sivu) throws Exception {
         List<String> ehdot = new ArrayList<>();
         List<Object> arvot = new ArrayList<>();
 
         ehdot.add("Viesti.avaus=?");
         arvot.add(avausId);
+        
+        int limit = 10;
 
-        return super.findByCondition(ehdot, arvot);
+        return super.findByCondition(ehdot, arvot, limit, limit*(sivu-1), "aika", false);
     }
 
     public void viestiSisalto(List<Viesti> lista) throws Exception {

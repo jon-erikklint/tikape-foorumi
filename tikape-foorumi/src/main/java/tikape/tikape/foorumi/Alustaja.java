@@ -49,16 +49,24 @@ public class Alustaja {
     private void avaussivu() {
         get("/:alue", (req, res) -> {
             String a = req.params(":alue");
+            String sivu = req.queryParams("sivu");
+            
             int alue;
+            int sivuNumero = 1;
+            
             try {
                 alue = Integer.parseInt(a);
             } catch (Exception e) {
                 return new ModelAndView(null, "avaukset");
             }
+            
+            try{
+            sivuNumero = Integer.parseInt(sivu);
+            }catch(Exception e){}
 
             Map map = new HashMap<>();
 
-            List<Avaus> avaukset = avausDao.avauksetAlueella(alue);
+            List<Avaus> avaukset = avausDao.avauksetAlueella(alue, sivuNumero);
             avausDao.uusinViestiAvauksessa(avaukset);
             avausDao.viestejaAvauksessa(avaukset);
 
@@ -134,7 +142,10 @@ public class Alustaja {
     private void viestisivu() {
         get("/:alue/:avaus", (req, res) -> {
             String avaus = req.params(":avaus");
+            String sivu = req.queryParams("sivu");
+            
             int avausId;
+            int sivuNumero = 1;
 
             try {
             avausId = Integer.parseInt(avaus);
@@ -142,9 +153,13 @@ public class Alustaja {
                 return new ModelAndView(null, "avaus");
             }
             
+            try{
+            sivuNumero = Integer.parseInt(sivu);
+            }catch(Exception e){}
+            
             Map map = new HashMap();
 
-            List<Viesti> lista = viestiDao.viestejaAvauksessa(avausId);
+            List<Viesti> lista = viestiDao.viestejaAvauksessa(avausId, sivuNumero);
             viestiDao.viestiSisalto(lista);
 
             map.put("viestit", lista);

@@ -14,14 +14,16 @@ public class AvausDao extends AbstraktiDao<Avaus,Integer> {
         super(db, "Avaus");
     }
     
-    public List<Avaus> avauksetAlueella(int alueId)throws Exception{
+    public List<Avaus> avauksetAlueella(int alueId, int sivu)throws Exception{
         List<String> ehdot = new ArrayList<>();
         List<Object> arvot = new ArrayList<>();
         
         ehdot.add("Avaus.alue=?");
         arvot.add(alueId);
         
-        return super.findByCondition(ehdot, arvot);
+        int limit = 10;
+        
+        return super.findByCondition(ehdot, arvot, limit, limit*(sivu-1), "otsikko", false);
     }
     
     public void viestejaAvauksessa(List<Avaus> avaukset) throws Exception{
