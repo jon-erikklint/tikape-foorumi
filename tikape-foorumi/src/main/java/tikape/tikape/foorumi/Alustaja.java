@@ -8,17 +8,9 @@ import java.util.List;
 import java.util.*;
 import spark.ModelAndView;
 import tikape.tikape.foorumi.database.*;
-import spark.Spark.*;
-import static spark.Spark.get;
-import static spark.Spark.post;
+import static spark.Spark.*;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import tikape.tikape.foorumi.domain.*;
-import static spark.Spark.get;
-import static spark.Spark.post;
-import static spark.Spark.get;
-import static spark.Spark.post;
-import static spark.Spark.get;
-import static spark.Spark.post;
 
 public class Alustaja {
 
@@ -76,6 +68,19 @@ public class Alustaja {
 
             map.put("aihealue", al.getNimi());
             map.put("aiheid", alue);
+            
+            List<Integer> sivunumerot = new ArrayList<>();
+            
+            int sivuja = avaukset.size()/10;
+            if(avaukset.size()%10 != 0){
+                sivuja++;
+            }
+            
+            for(int i = 0 ; i < sivuja; i++){
+                sivunumerot.add(i+1);
+            }
+            
+            map.put("sivunumerot", sivunumerot);
 
             return new ModelAndView(map, "avaukset");
         },
@@ -170,6 +175,19 @@ public class Alustaja {
             map.put("otsikko", av.getOtsikko());
             map.put("alue", al.getNimi());
             map.put("alueid", al.getId());
+            
+            List<Integer> sivunumerot = new ArrayList<>();
+            
+            int sivuja = lista.size()/10;
+            if(lista.size()%10 != 0){
+                sivuja++;
+            }
+            
+            for(int i = 0 ; i < sivuja; i++){
+                sivunumerot.add(i+1);
+            }
+            
+            map.put("sivunumerot", sivunumerot);
 
             return new ModelAndView(map, "avaus");
 
