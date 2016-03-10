@@ -4,6 +4,30 @@
     <head>
         <title>Otsikko</title>
         <meta charset="utf-8" />
+        <style>
+            ul.pagination {
+                display: inline-block;
+                padding: 0;
+                margin: 0;
+            }
+
+            ul.pagination li {display: inline;}
+
+            ul.pagination li a {
+                color: black;
+                float: left;
+                padding: 6px 12px;
+                text-decoration: none;
+                transition: background-color .3s;
+            }
+
+            ul.pagination li a.active {
+                background-color: #B0C4DE;
+                color: white;
+            }
+
+            ul.pagination li a:hover:not(.active) {background-color: #ddd;}
+        </style>
     </head>
 
     <body>
@@ -23,15 +47,28 @@
                 <td th:text="${avaus.uusinviesti}">0</td>
             </tr>
         </table>
-        
+
         <br/>
-        
+
         <form method="POST" th:action="${aiheid}">
             Avauksen otsikko: <input type="text" name="otsikko"/><br/>
             Viesti: <input type="text" name="viestinSisalto"/><br/>
             Nimimerkki: <input type="text" name="kayttaja"/><br/>
             <input type="submit"/>
         </form>
+
+        <h6></h6>
+
+        <ul class="pagination">
+            <li><a href="#">«</a></li>
+            <li><a class="active" href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">6</a></li>
+            <li><a href="#">»</a></li>
+        </ul>
 
     </body>
 </html>
