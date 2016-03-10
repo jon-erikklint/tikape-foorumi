@@ -150,8 +150,11 @@ public class Alustaja {
             map.put("viestit", lista);
 
             Avaus av = avausDao.findOne(avausId);
+            Alue al = alueDao.findOne(av.getAlueId());
 
             map.put("otsikko", av.getOtsikko());
+            map.put("alue", al.getNimi());
+            map.put("alueid", al.getId());
 
             return new ModelAndView(map, "avaus");
 

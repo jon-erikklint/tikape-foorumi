@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <h1>Alue: <span th:text="${aihealue}"></span> -> <span th:text="${avaus}"></span></h1>
+        <h3>Alue: <a th:href="@{http://localhost:4567/__${alueid}__}"><span th:text="${alue}"></span></a> -> <span th:text="${otsikko}"></span></h3>
 
         <ol>
             <li th:each="viesti :${viestit}">
@@ -15,7 +15,7 @@
             </li>
         </ol>
         
-        <form>
+        <form method="POST">
             Viestin sisältö: <br/>
             <input type="text" name="sisalto"/><br/>
             Käyttäjätunnus:
