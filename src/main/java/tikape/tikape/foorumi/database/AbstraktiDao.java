@@ -135,7 +135,9 @@ public abstract class AbstraktiDao<T,K> implements Dao<T,K>{
         PreparedStatement ps = c.prepareStatement("INSERT INTO "+taulu+" VALUES ("+apu+")");
         
         for(int i = 0 ; i < parametres.size(); i++){
-            ps.setObject(i+1, parametres.get(i));
+            Object o = parametres.get(i);
+            o.getClass();
+            ps.setObject(i+1, o);
         }
         
         ps.executeUpdate();
