@@ -18,6 +18,17 @@ public class Alustaja {
     private AvausDao avausDao;
     private ViestiDao viestiDao;
 
+    public void alustaHeroku(){
+        if (System.getenv("PORT") != null) {
+            port(Integer.valueOf(System.getenv("PORT")));
+        }
+
+        String jdbcOsoite = "jdbc:sqlite:foorumi.db";
+        if (System.getenv("DATABASE_URL") != null) {
+            jdbcOsoite = System.getenv("DATABASE_URL");
+        }
+    }
+    
     public void alustaSql() {
         Database db = luoDatabase();
 
@@ -75,6 +86,8 @@ public class Alustaja {
             if(avaukset.size()%10 != 0){
                 sivuja++;
             }
+            
+            System.out.println(sivuja);
             
             for(int i = 0 ; i < sivuja; i++){
                 sivunumerot.add(i+1);
@@ -177,15 +190,20 @@ public class Alustaja {
             map.put("alueid", al.getId());
             
             List<String> sivunumerot = new ArrayList<>();
+            List<Integer> sivut = new ArrayList<>();
             
-            int sivuja = lista.size()/10;
-            if(lista.size()%10 != 0){
+            int viesteja = viestiDao.viestejaAvauksessa(avausId);
+            
+            int sivuja = viesteja/10;
+            
+            if(viesteja%10 != 0){
                 sivuja++;
             }
             
             for(int i = 0 ; i < sivuja; i++){
                 int j = i +1;
                 sivunumerot.add("?sivu="+j);
+                sivut.add(j);
             }
             
             map.put("sivunumerot", sivunumerot);

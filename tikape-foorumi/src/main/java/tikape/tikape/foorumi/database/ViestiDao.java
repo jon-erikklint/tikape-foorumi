@@ -58,6 +58,16 @@ public class ViestiDao extends AbstraktiDao<Viesti, Integer> {
 
         return super.findByCondition(ehdot, arvot, limit, limit*(sivu-1), "aika", false);
     }
+    
+    public int viestejaAvauksessa(int avausId) throws Exception{
+        List<String> ehdot = new ArrayList<>();
+        List<Object> arvot = new ArrayList<>();
+
+        ehdot.add("Viesti.avaus=?");
+        arvot.add(avausId);
+        
+        return super.findByCondition(ehdot, arvot, 999999, 0, "aika", true).size();
+    }
 
     public void viestiSisalto(List<Viesti> lista) throws Exception {
         Connection c = db.getConnection();
