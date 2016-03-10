@@ -32,9 +32,9 @@ public class Alustaja {
 
     private Database luoDatabase() throws Exception{
         String osoite = "jdbc:sqlite:foorumi.db";
-//        if (System.getenv("DATABASE_URL") != null) {
-//            osoite = System.getenv("DATABASE_URL");
-//        }
+        if (System.getenv("DATABASE_URL") != null) {
+            osoite = System.getenv("DATABASE_URL");
+        }
 
         return new Database(osoite);
     }
