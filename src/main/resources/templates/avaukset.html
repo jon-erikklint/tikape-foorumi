@@ -33,13 +33,13 @@
     <body>
         <table>
             <tr>
-                <td><a th:href="@{https://afternoon-hamlet-63717.herokuapp.com/}"><span>Alue:  </span></a><span th:text="${aihealue}"></span></td>
+                <td><a th:href="@{https://ancient-citadel-32552.herokuapp.com/}"><span>Alue:  </span></a><span th:text="${aihealue}"></span></td>
                 <td>Viestejä:</td>
                 <td>Viimeisin viesti:</td>
             </tr>
             <tr th:each="avaus : ${avaukset}">
                 <td>
-                    <a th:href="@{https://afternoon-hamlet-63717.herokuapp.com/__${avaus.alueId}__/__${avaus.id}__}">
+                    <a th:href="@{https://ancient-citadel-32552.herokuapp.com/__${avaus.alueId}__/__${avaus.id}__}">
                         <span th:text="${avaus.otsikko}"></span>
                     </a>
                 </td>
