@@ -23,13 +23,10 @@ public class Alustaja {
             port(Integer.valueOf(System.getenv("PORT")));
         }
 
-        String jdbcOsoite = "jdbc:sqlite:foorumi.db";
-        if (System.getenv("DATABASE_URL") != null) {
-            jdbcOsoite = System.getenv("DATABASE_URL");
-        }
+        
     }
     
-    public void alustaSql() {
+    public void alustaSql() throws Exception{
         Database db = luoDatabase();
 
         alueDao = new AlueDao(db);
@@ -37,8 +34,11 @@ public class Alustaja {
         viestiDao = new ViestiDao(db);
     }
 
-    private Database luoDatabase() {
+    private Database luoDatabase() throws Exception{
         String osoite = "jdbc:sqlite:foorumi.db";
+        if (System.getenv("DATABASE_URL") != null) {
+            osoite = System.getenv("DATABASE_URL");
+        }
 
         return new Database(osoite);
     }

@@ -11,13 +11,13 @@ public class Database {
     
     private String osoite;
 
-    public Database(String osoite) {
+    public Database(String osoite) throws Exception{
         this.osoite = osoite;
         
         init();
     }
     
-    private void init(){
+    private void init() throws Exception{
         List<String> alustus = new ArrayList<>();
         alustus.add("CREATE TABLE Alue (id integer PRIMARY KEY NOT NULL,nimi varchar(40) NOT NULL);");
         alustus.add("CREATE TABLE Avaus (id integer PRIMARY KEY NOT NULL,otsikko varchar(60) NOT NULL,alue integer NOT NULL,FOREIGN KEY (alue) REFERENCES Alue(id));");
@@ -52,7 +52,7 @@ public class Database {
             System.out.println("en toimi nytkään!");
         }
         
-        
+        c.close();
     }
     
     public Connection getConnection() throws Exception{
