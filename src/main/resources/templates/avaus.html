@@ -8,14 +8,7 @@
             body{
                 background-color: #C1EAFF;
             }
-            nav {
-                font-size: 1.2em;
-                background-color: #F0F0F0;
-                margin: -10px;
-                margin-left: -10px;
-                margin-right: -380px;
-                padding: 4px;
-            }
+
 
             ul.pagination {
                 display: inline-block;
@@ -44,11 +37,8 @@
     </head>
 
     <body>
-        <nav>
-            <a href="" class="eka">Etusivu</a>
-            <a href="/__${alueid__}" class="eka"><span th:text="${alue}"></span></a>
-        </nav>
-        <h3>Alue: <span th:text="${alue}"></span> -> <span th:text="${otsikko}"></span></h3>
+
+        <h3>Alue: <a href="@{https://ancient-citadel-32552.herokuapp.com/__${alueid}__}"><span th:text="${alue}"></span></a> -> <span th:text="${otsikko}"></span></h3>
 
         <ol>
             <li th:each="viesti :${viestit}">
