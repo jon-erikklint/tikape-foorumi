@@ -2,9 +2,9 @@ package tikape.tikape.foorumi.database;
 
 import java.util.List;
 
-public interface Dao<T, K> {
+public interface Dao<T> {
     
-    public T findOne(K k) throws Exception;
+    public T findOne(int k) throws Exception;
     
     public List<T> findAll() throws Exception;
     
@@ -14,6 +14,6 @@ public interface Dao<T, K> {
     
     public void add(T t) throws Exception;
     
-    public void delete(K k) throws Exception;
+    public void delete(int k) throws Exception;
     
 }

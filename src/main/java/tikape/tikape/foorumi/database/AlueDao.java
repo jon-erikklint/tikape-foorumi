@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import tikape.tikape.foorumi.domain.Alue;
 
-public class AlueDao extends AbstraktiDao<Alue, Integer> {
+public class AlueDao extends AbstraktiDao<Alue> {
 
     public AlueDao(Database db) {
         super(db, "Alue");
@@ -44,7 +44,7 @@ public class AlueDao extends AbstraktiDao<Alue, Integer> {
         for(Alue al : a){
             
             PreparedStatement ps = c.prepareStatement("SELECT * FROM Avaus a, Viesti v WHERE a.id = v.avaus AND a.alue=? ORDER BY v.aika DESC");
-            ps.setObject(1, al.getId());
+            ps.setInt(1, al.getId());
             
             ResultSet rs = ps.executeQuery();
             
@@ -71,10 +71,10 @@ public class AlueDao extends AbstraktiDao<Alue, Integer> {
     }
 
     @Override
-    public List<String> values(Alue t) throws Exception {
-        List<String> lista = new ArrayList();
+    public List<Object> values(Alue t) throws Exception {
+        List<Object> lista = new ArrayList();
 
-        String id = "" + t.getId();
+        int id =  t.getId();
         String nimi = t.getNimi();
 
         lista.add(id);

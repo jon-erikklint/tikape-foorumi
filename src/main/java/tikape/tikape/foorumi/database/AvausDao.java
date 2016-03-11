@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import tikape.tikape.foorumi.domain.Avaus;
 
-public class AvausDao extends AbstraktiDao<Avaus,Integer> {
+public class AvausDao extends AbstraktiDao<Avaus> {
 
     public AvausDao(Database db) {
         super(db, "Avaus");
@@ -31,7 +31,9 @@ public class AvausDao extends AbstraktiDao<Avaus,Integer> {
         
         for(Avaus avaus : avaukset){
             PreparedStatement ps = c.prepareStatement("SELECT COUNT(*) viesteja FROM Avaus a, Viesti v WHERE a.id = v.avaus AND a.id=?;");
-            ps.setObject(1, avaus.getId());
+            
+            
+            ps.setInt(1, avaus.getId());
 
             ResultSet rs = ps.executeQuery();
             rs.next();
@@ -51,7 +53,7 @@ public class AvausDao extends AbstraktiDao<Avaus,Integer> {
         for(Avaus avaus: avaukset){
             PreparedStatement ps = c.prepareStatement("SELECT * FROM Avaus a, Viesti v WHERE a.id = v.avaus AND a.id=? ORDER BY v.aika DESC LIMIT 1;");
         
-            ps.setObject(1, avaus.getId());
+            ps.setInt(1, avaus.getId());
 
             ResultSet rs = ps.executeQuery();
 
@@ -77,12 +79,12 @@ public class AvausDao extends AbstraktiDao<Avaus,Integer> {
     }
 
     @Override
-    public List<String> values(Avaus t) throws Exception {
-        List<String> lista = new ArrayList();
+    public List<Object> values(Avaus t) throws Exception {
+        List<Object> lista = new ArrayList();
 
-        String id = "" + t.getId();
+        int id = t.getId();
         String otsikko = t.getOtsikko();
-        String alue = t.getAlueId() + "";
+        int alue = t.getAlueId();
 
         lista.add(id);
         lista.add(otsikko);

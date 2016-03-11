@@ -3,6 +3,8 @@ package tikape.tikape.foorumi;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.HashMap;
+import java.util.List;
 import java.util.*;
 import spark.ModelAndView;
 import tikape.tikape.foorumi.database.*;
@@ -15,14 +17,19 @@ public class Alustaja {
     private AlueDao alueDao;
     private AvausDao avausDao;
     private ViestiDao viestiDao;
-    
+
     public void alustaHeroku(){
         if (System.getenv("PORT") != null) {
             port(Integer.valueOf(System.getenv("PORT")));
         }
+
+        String jdbcOsoite = "jdbc:sqlite:foorumi.db";
+        if (System.getenv("DATABASE_URL") != null) {
+            jdbcOsoite = System.getenv("DATABASE_URL");
+        }
     }
     
-    public void alustaSql() throws Exception{
+    public void alustaSql() {
         Database db = luoDatabase();
 
         alueDao = new AlueDao(db);
@@ -30,11 +37,8 @@ public class Alustaja {
         viestiDao = new ViestiDao(db);
     }
 
-    private Database luoDatabase() throws Exception{
+    private Database luoDatabase() {
         String osoite = "jdbc:sqlite:foorumi.db";
-        if (System.getenv("DATABASE_URL") != null) {
-            osoite = System.getenv("DATABASE_URL");
-        }
 
         return new Database(osoite);
     }

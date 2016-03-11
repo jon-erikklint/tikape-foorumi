@@ -8,7 +8,7 @@ import java.time.Instant;
 import java.util.*;
 import tikape.tikape.foorumi.domain.Viesti;
 
-public class ViestiDao extends AbstraktiDao<Viesti, Integer> {
+public class ViestiDao extends AbstraktiDao<Viesti> {
 
     public ViestiDao(Database db) {
         super(db, "Viesti");
@@ -28,14 +28,14 @@ public class ViestiDao extends AbstraktiDao<Viesti, Integer> {
     }
 
     @Override
-    public List<String> values(Viesti t) throws Exception {
-        List<String> lista = new ArrayList();
+    public List<Object> values(Viesti t) throws Exception {
+        List<Object> lista = new ArrayList();
 
-        String id = "" + t.getId();
+        int id =t.getId();
         String sisalto = t.getSisalto();
-        String aika = t.getDate() + "";
+        Timestamp aika = t.getDate();
         String kayttaja = t.getKayttaja();
-        String avausId = t.getAvausId()+"";
+        int avausId = t.getAvausId();
 
         lista.add(id);
         lista.add(sisalto);
@@ -74,7 +74,7 @@ public class ViestiDao extends AbstraktiDao<Viesti, Integer> {
 
         for (Viesti v : lista) {
             PreparedStatement s = c.prepareStatement("SELECT v.sisalto as sisalto, v.kayttaja as nimi FROM Viesti v WHERE v.id =?");
-            s.setObject(1, v.getId());
+            s.setInt(1, v.getId());
             ResultSet rs = s.executeQuery();
             
             rs.next();
