@@ -80,7 +80,7 @@ public class Alustaja {
             map.put("aihealue", al.getNimi());
             map.put("aiheid", alue);
             
-            List<Integer> sivunumerot = new ArrayList<>();
+            List<String> sivunumerot = new ArrayList<>();
             
             int avauksia = avausDao.avauksiaAlueessa(alue);
             int sivuja = avauksia/10;
@@ -89,7 +89,9 @@ public class Alustaja {
             }
             
             for(int i = 0 ; i < sivuja; i++){
-                sivunumerot.add(i+1);
+                int summa = i+1;
+                
+                sivunumerot.add("?sivu="+summa);
             }
             
             map.put("sivunumerot", sivunumerot);
