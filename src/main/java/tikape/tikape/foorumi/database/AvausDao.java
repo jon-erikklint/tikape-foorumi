@@ -3,7 +3,6 @@ package tikape.tikape.foorumi.database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import tikape.tikape.foorumi.domain.Avaus;
@@ -66,6 +65,16 @@ public class AvausDao extends AbstraktiDao<Avaus> {
         }
         
         c.close();
+    }
+    
+    public int avauksiaAlueessa(int avausId) throws Exception{
+        List<String> ehdot = new ArrayList<>();
+        List<Object> arvot = new ArrayList<>();
+
+        ehdot.add("Avaus.alue=?");
+        arvot.add(avausId);
+        
+        return super.findByCondition(ehdot, arvot, 999999, 0, "otsikko", true).size();
     }
 
     @Override

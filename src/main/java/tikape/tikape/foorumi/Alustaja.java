@@ -82,12 +82,10 @@ public class Alustaja {
             
             List<Integer> sivunumerot = new ArrayList<>();
             
-            int sivuja = avaukset.size()/10;
+            int sivuja = avausDao.avauksiaAlueessa(alue)/10;
             if(avaukset.size()%10 != 0){
                 sivuja++;
             }
-            
-            System.out.println(sivuja);
             
             for(int i = 0 ; i < sivuja; i++){
                 sivunumerot.add(i+1);
@@ -190,7 +188,6 @@ public class Alustaja {
             map.put("alueid", al.getId());
             
             List<String> sivunumerot = new ArrayList<>();
-            List<Integer> sivut = new ArrayList<>();
             
             int viesteja = viestiDao.viestejaAvauksessa(avausId);
             
@@ -203,7 +200,6 @@ public class Alustaja {
             for(int i = 0 ; i < sivuja; i++){
                 int j = i +1;
                 sivunumerot.add("?sivu="+j);
-                sivut.add(j);
             }
             
             map.put("sivunumerot", sivunumerot);
