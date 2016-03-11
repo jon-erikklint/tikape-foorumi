@@ -4,7 +4,19 @@
     <head>
         <title>Otsikko</title>
         <meta charset="utf-8" />
-        <style>
+        <style type="text/css">
+            body{
+                background-color: #C1EAFF;
+            }
+            nav {
+                font-size: 1.2em;
+                background-color: #F0F0F0;
+                margin: -10px;
+                margin-left: -10px;
+                margin-right: -380px;
+                padding: 4px;
+            }
+
             ul.pagination {
                 display: inline-block;
                 padding: 0;
@@ -31,9 +43,13 @@
     </head>
 
     <body>
+        <nav>
+            <a href="@{https://ancient-citadel-32552.herokuapp.com/" class="eka">Etusivu</a>
+        </nav>
+        <h3></h3>
         <table>
             <tr>
-                <td><a th:href="@{https://ancient-citadel-32552.herokuapp.com/}"><span>Alue:  </span></a><span th:text="${aihealue}"></span></td>
+                <td><span>Alue:  </span><span th:text="${aihealue}"></span></td>
                 <td>Viestejä:</td>
                 <td>Viimeisin viesti:</td>
             </tr>
