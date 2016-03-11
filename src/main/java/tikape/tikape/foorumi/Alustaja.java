@@ -82,8 +82,9 @@ public class Alustaja {
             
             List<Integer> sivunumerot = new ArrayList<>();
             
-            int sivuja = avausDao.avauksiaAlueessa(alue)/10;
-            if(avaukset.size()%10 != 0){
+            int avauksia = avausDao.avauksiaAlueessa(alue);
+            int sivuja = avauksia/10;
+            if(avauksia%10 != 0){
                 sivuja++;
             }
             
